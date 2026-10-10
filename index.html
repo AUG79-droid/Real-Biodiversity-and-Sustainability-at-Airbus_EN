@@ -333,7 +333,7 @@ function parseSectionHeading(rawTitle,kicker){
 function splitLeadText(text){const i=text.indexOf(':'); return i>0 && i<95 ? {lead:text.slice(0,i+1),rest:text.slice(i+1).trim()} : {lead:'',rest:text};}
 function figureHtml(src,label,tone,tall=false){
   const cls = tall ? 'media' : 'media short';
-  return `<div class="${cls}" style="border-color:${tone.line};background:${tone.soft}"><img src="${esc(src)}" alt="${esc(label)}" onerror="this.parentElement.innerHTML=window.figureFallback('${esc(label)}','${esc(tone.line)}','${esc(tone.soft)}','${esc(tone.panel)}')"><div class="label">${esc(label)}</div></div>`;
+  return `<div class="${cls}" style="border-color:${tone.line};background:${tone.soft}"><img src="${esc(src)}" alt="${esc(label)}" onerror="this.parentElement.innerHTML=window.figureFallback('${esc(label)}','${esc(tone.line)}','${esc(tone.soft)}','${esc(tone.panel)}')">${/\s·\shero$/i.test(label) ? "" : `<div class="label">${esc(label)}</div>`}</div>`;
 }
 window.figureFallback=(label,line,soft,panel)=>`<div class="media short" style="border-color:${line};background:linear-gradient(135deg,${soft} 0%, #fff 55%, ${panel} 100%)"><div class="fallback"><div class="fallback-inner"><div class="ficon"></div><div class="label">${label}</div></div></div></div>`;
 function renderParagraph(paragraph,accent){
