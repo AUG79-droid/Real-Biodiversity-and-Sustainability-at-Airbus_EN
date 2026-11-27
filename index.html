@@ -405,6 +405,7 @@ function render(){
   qs('#brand-title').textContent=DATA.course.title; qs('#brand-sub').textContent=DATA.course.subtitle;
   qs('#home-view').innerHTML=homeHtml();
   qs('#program-view').innerHTML=programHtml();
+  document.body.dataset.snPilotComplete=String(DATA.modules.every(m=>state.completed[m.id]));
   qs('#module-view').innerHTML=state.currentModule?moduleHtml(state.currentModule):'';
   qs('#home-view').classList.toggle('hidden',state.view!=='home');
   qs('#program-view').classList.toggle('hidden',state.view!=='program');
@@ -444,6 +445,8 @@ function submitChoice(key){
   }
   if(correct&&resolved.kind==='quiz'){
     state.completed[resolved.module.id]=true;
+    document.body.dataset.snPilotComplete=String(DATA.modules.every(m=>state.completed[m.id]));
+    if(DATA.modules.every(m=>state.completed[m.id]))document.dispatchEvent(new Event("sn-pilot:completed"));
     try{localStorage.setItem('airbusNatureCourseProgress',JSON.stringify(state.completed));}catch{}
   }
 }
@@ -452,6 +455,7 @@ window.goHome=goHome; window.goProgram=goProgram; window.openModule=openModule;
 qs('#nav-home').onclick=goHome; qs('#nav-program').onclick=goProgram;
 render();
 </script>
+<script src="./learning-evidence.js" defer></script>
 </body>
 </html>
 
